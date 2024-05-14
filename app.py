@@ -130,4 +130,4 @@ if __name__ == "__main__":
         os.makedirs(app.config["CROPPED_FOLDER"])
     if not os.path.exists(app.config["MASKED_FOLDER"]):
         os.makedirs(app.config["MASKED_FOLDER"])
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")
