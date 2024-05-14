@@ -1,9 +1,16 @@
-<!-- templates\results.html (do not remove this comment) -->
-{% extends "base.html" %}
-
-{% block title %}Results{% endblock %}
-
-{% block content %}
+<!-- templates/results.html (do not remove this comment) -->
+{% extends "base.html" %} {% block title %}Results{% endblock %} {% block content %}
 <h1>Results Page</h1>
 <p>Welcome to the Results page!</p>
+<div class="container">
+	<div class="row">
+		{% for image_url in image_urls %}
+		<div class="col-md-3 mb-4">
+			<div class="card">
+				<img src="{{ url_for('serve_cropped_image', filename=image_url) }}" class="card-img-top" alt="Cropped Image" />
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
 {% endblock %}
