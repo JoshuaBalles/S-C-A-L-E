@@ -1,5 +1,5 @@
-<!-- templates\home.html (do not remove this comment) -->
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
+<!-- templates\capture.html (do not remove this comment) -->
+{% extends "base.html" %} {% block title %}Capture{% endblock %} {% block content %}
 <div class="container d-flex justify-content-center align-items-center" style="height: 80vh">
 	<div class="text-center">
 		<h1>Webcam Feed</h1>
@@ -25,10 +25,36 @@
 			console.error("Error accessing webcam: ", err);
 		});
 
-	// Placeholder for capture button functionality
 	document.getElementById("capture-btn").addEventListener("click", () => {
-		console.log("Capture button clicked");
-		// Implement capture functionality here if needed
+		captureImage();
 	});
+
+	function captureImage() {
+		const canvas = document.createElement("canvas");
+		canvas.width = 1280;
+		canvas.height = 720;
+		const context = canvas.getContext("2d");
+		context.drawImage(video, 0, 0, canvas.width, canvas.height);
+		canvas.toBlob((blob) => {
+			const formData = new FormData();
+			formData.append("image", blob, "capture.jpg");
+			fetch("/capture_image", {
+				method: "POST",
+				body: formData,
+			})
+				.then((response) => response.json())
+				.then((data) => {
+					if (data.success) {
+						console.log("Image uploaded and processed:", data.filepath);
+						// Redirect to results page or handle success
+					} else {
+						console.error("Error uploading image:", data.error);
+					}
+				})
+				.catch((error) => {
+					console.error("Error:", error);
+				});
+		}, "image/jpeg");
+	}
 </script>
 {% endblock %}
