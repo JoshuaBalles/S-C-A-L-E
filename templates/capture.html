@@ -3,8 +3,12 @@
 <div class="container d-flex justify-content-center align-items-center" style="height: 80vh">
 	<div class="text-center">
 		<h1>Webcam Feed</h1>
-		<div class="embed-responsive embed-responsive-16by9 mb-3">
-			<video id="webcam" autoplay playsinline style="width: 1280px; height: 720px; border: 1px solid #ccc"></video>
+		<div class="embed-responsive embed-responsive-16by9 mb-3 d-flex justify-content-center align-items-center">
+			<video
+				id="webcam"
+				autoplay
+				playsinline
+				style="width: 1280px; height: 720px; border: 1px solid #ccc; transform: scale(0.5); transform-origin: center center"></video>
 		</div>
 		<button class="btn btn-primary" id="capture-btn">Capture</button>
 	</div>
