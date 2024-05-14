@@ -1,78 +1,116 @@
 <!-- templates/capture.html (do not change/remove this comment) -->
-{% extends "base.html" %} {% block title %}Capture{% endblock %} {% block content %}
+{% extends "base.html" %} 
+{% block title %}Capture{% endblock %} 
+{% block content %}
+<style>
+	body{
+		background-color: bisque ;
+	}
+    .container {
+        background-color: #f8f9fa; /* Light gray background color */
+        padding: 20px; /* Add padding */
+        border-radius: 10px; /* Add border radius */
+    }
+
+    h1 {
+        color: #333; /* Dark text color */
+        margin-bottom: 20px; /* Add bottom margin */
+    }
+
+    #webcam {
+        border: 1px solid #ccc; /* Add border to video element */
+        border-radius: 10px; /* Add border radius */
+        background-color: #fff; /* White background color */
+    }
+
+    #capture-btn {
+        background-color: #007bff; /* Primary button color */
+        color: #fff; /* Button text color */
+        border: none; /* Remove button border */
+        border-radius: 5px; /* Add border radius */
+        padding: 10px 20px; /* Add padding */
+        cursor: pointer; /* Add cursor pointer */
+    }
+
+    #capture-btn:disabled {
+        background-color: #6c757d; /* Disabled button color */
+        cursor: not-allowed; /* Change cursor to not-allowed */
+    }
+</style>
+
 <div class="container d-flex justify-content-center align-items-center" style="height: 80vh">
-	<div class="text-center">
-		<h1>Webcam Feed</h1>
-		<div class="embed-responsive embed-responsive-16by9 mb-3 d-flex justify-content-center align-items-center">
-			<video
-				id="webcam"
-				autoplay
-				playsinline
-				style="width: 1280px; height: 720px; border: 1px solid #ccc; transform: scale(0.5); transform-origin: center center"></video>
-		</div>
-		<button class="btn btn-primary" id="capture-btn">Capture</button>
-	</div>
+    <div class="text-center">
+        <h1>Webcam Feed</h1>
+        <div class="embed-responsive embed-responsive-16by9 mb-3 d-flex justify-content-center align-items-center">
+            <video
+                id="webcam"
+                autoplay
+                playsinline
+                style="width: 100%; max-width: 800px; height: auto; border: 1px solid #ccc; border-radius: 10px;"></video>
+        </div>
+        <button class="btn btn-primary" id="capture-btn">Capture</button>
+    </div>
 </div>
 
 <script>
-	document.addEventListener("DOMContentLoaded", () => {
-		const video = document.getElementById("webcam");
+    document.addEventListener("DOMContentLoaded", () => {
+        const video = document.getElementById("webcam");
 
-		// Request access to the webcam with specific resolution
-		navigator.mediaDevices
-			.getUserMedia({
-				video: { width: 1280, height: 720 },
-			})
-			.then((stream) => {
-				video.srcObject = stream;
-			})
-			.catch((err) => {
-				console.error("Error accessing webcam: ", err);
-			});
+        // Request access to the webcam with specific resolution
+        navigator.mediaDevices
+            .getUserMedia({
+                video: { width: 1280, height: 720 },
+            })
+            .then((stream) => {
+                video.srcObject = stream;
+            })
+            .catch((err) => {
+                console.error("Error accessing webcam: ", err);
+            });
 
-		document.getElementById("capture-btn").addEventListener("click", () => {
-			captureImage();
-		});
+        document.getElementById("capture-btn").addEventListener("click", () => {
+            captureImage();
+        });
 
-		function captureImage() {
-			const captureButton = document.getElementById("capture-btn");
-			captureButton.disabled = true;
-			captureButton.style.backgroundColor = "red";
-			captureButton.textContent = "Processing...";
+        function captureImage() {
+            const captureButton = document.getElementById("capture-btn");
+            captureButton.disabled = true;
+            captureButton.style.backgroundColor = "#dc3545"; /* Change button color to red */
+            captureButton.textContent = "Processing...";
 
-			const canvas = document.createElement("canvas");
-			canvas.width = 1280;
-			canvas.height = 720;
-			const context = canvas.getContext("2d");
-			context.drawImage(video, 0, 0, canvas.width, canvas.height);
-			canvas.toBlob((blob) => {
-				const formData = new FormData();
-				formData.append("image", blob, "capture.jpg");
-				fetch("/capture_image", {
-					method: "POST",
-					body: formData,
-				})
-					.then((response) => response.json())
-					.then((data) => {
-						if (data.success) {
-							console.log("Image uploaded and processed:", data.filepath);
-							// Redirect to results page or handle success
-							window.location.href = "/results";
-						} else {
-							console.error("Error uploading image:", data.error);
-							captureButton.disabled = false;
-							captureButton.style.backgroundColor = "";
-							captureButton.textContent = "Capture";
-						}
-					})
-					.catch((error) => {
-						console.error("Error:", error);
-						captureButton.disabled = false;
-						captureButton.style.backgroundColor = "";
-						captureButton.textContent = "Capture";
-					});
-			}, "image/jpeg");
-		}
-	});
+            const canvas = document.createElement("canvas");
+            canvas.width = 1280;
+            canvas.height = 720;
+            const context = canvas.getContext("2d");
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob((blob) => {
+                const formData = new FormData();
+                formData.append("image", blob, "capture.jpg");
+                fetch("/capture_image", {
+                    method: "POST",
+                    body: formData,
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success) {
+                            console.log("Image uploaded and processed:", data.filepath);
+                            // Redirect to results page or handle success
+                            window.location.href = "/results";
+                        } else {
+                            console.error("Error uploading image:", data.error);
+                            captureButton.disabled = false;
+                            captureButton.style.backgroundColor = "#007bff"; /* Reset button color */
+                            captureButton.textContent = "Capture";
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                        captureButton.disabled = false;
+                        captureButton.style.backgroundColor = "#007bff"; /* Reset button color */
+                        captureButton.textContent = "Capture";
+                    });
+            }, "image/jpeg");
+        }
+    });
 </script>
 {% endblock %}

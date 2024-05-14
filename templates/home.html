@@ -1,5 +1,125 @@
-<!-- templates\home.html (do not remove this comment) -->
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
-<h1>Home Page</h1>
-<p>Welcome to the Home page!</p>
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<style>
+    *{
+        margin:0px;
+        padding:0px;
+    }
+    .ani {
+        position: fixed;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        animation: blackAndWhite 10s infinite alternate;
+    }
+
+    @keyframes blackAndWhite {
+        0% {
+            background-color: black;
+        }
+        100% {
+            background-color: white;
+        }
+    }
+
+    @keyframes textBlackAndWhite {
+        0% {
+            color: white; /* Text color: white */
+        }
+        100% {
+            color: black; /* Text color: black */
+        }
+    }
+    
+    /* Apply animation to text div */
+    .text-div {
+        animation: textBlackAndWhite 10s infinite alternate;
+    }
+
+    /* Style for divs with headers and paragraphs */
+    .content-column {
+        width: 48%; /* Adjust width as needed */
+        border: 3px solid black; /* Border style */
+        padding: 20px; /* Padding for spacing */
+        margin: 10px; /* Margin for spacing between columns */
+        height: 600px; /* Set a fixed height for the sections */
+        border-radius: 30px; /* Border radius for rounded corners */
+        font-family: Arial, Helvetica, sans-serif; /* Font family */
+        background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white background */
+    }
+    
+    .bg {
+        position: absolute;
+        height:108%;
+        width: 115%;
+        border-top: 10px solid black;
+        top:110%;
+        left:-15%;
+        background-image: url("../static/bg.jpg");
+        z-index: -1;
+    }
+
+    /* Clear floats */
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    
+    /* Style for footer */
+    .footer {
+        position: relative;
+        top:210px;
+        background-color: #333; /* Dark background color */
+        color: #fff; /* White text color */
+        padding: 20px; /* Padding for the footer content */
+        text-align: center; /* Center-align footer content */
+        width: 117%;
+        left: -120px;
+
+    
+    }
+</style>
+<div class="ani"></div>
+<div class="background-image"></div>
+<div style="position: relative; width: 100%; height: 100%;">
+    <img src="../static/scale-logo.png" style="width: 55%; height:10%; position:relative; left:-10%; top:100%;">
+</div>
+
+<!-- Wrap h1 and p in a separate div with the class text-div -->
+<div class="text-div">
+    <h1 style="font-size:9.5em; font-family:arial black; font-style:BOLD; position: absolute; top:30%; left:36%;">S.C.A.L.E.</h1>
+    <p style="font-size:1.7em; font-family:courier new black; font-style:BOLD; position: absolute; top:60%; left:45%;">Empowering Farmers, One Bit at a Time</p>
+</div>
+
+<!-- Two separate divs with headers and paragraphs -->
+<div class="content-column" style="position: relative; top: 130px; float: left; text-align:justify">
+    <h2>Introduction</h2>
+    <p>This is the content of the first section. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor, ante non scelerisque aliquet, odio risus condimentum turpis, ac gravida lorem lacus vel libero. Sed nec fermentum velit. Nam nec nunc eu tellus consequat faucibus. Phasellus sit amet magna eget orci efficitur luctus. Ut efficitur aliquet velit vitae placerat. Sed sit amet efficitur risus. Mauris eleifend bibendum velit, et dictum turpis faucibus vel. Vivamus vel mauris et risus auctor congue. Suspendisse eget tincidunt est. Donec auctor ipsum et orci placerat, vel efficitur justo fringilla. Proin vel dapibus leo. Integer sagittis, lectus nec vulputate scelerisque, mauris lacus laoreet elit, id eleifend lacus mauris ut eros. Sed dapibus turpis odio, a vehicula justo commodo nec. Phasellus hendrerit elit vitae tellus suscipit ultrices.</p>
+    <p>Another paragraph of content. Duis venenatis semper magna, sit amet posuere justo consectetur vel. Curabitur auctor, eros non faucibus ultricies, nunc metus mattis felis, sit amet fringilla lacus metus in turpis. Proin in mi eu neque tempor aliquet. Fusce nec massa sit amet ex consequat consectetur eu ac neque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Cras vitae nisi in leo posuere commodo. Nulla facilisi. Nulla facilisi.</p>
+</div>
+
+<div class="content-column" style="position: relative; top: 130px; float: left; text-align:justify">
+    <h2>Instruction</h2>
+    <p>This is the content of the second section. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor, ante non scelerisque aliquet, odio risus condimentum turpis, ac gravida lorem lacus vel libero. Sed nec fermentum velit. Nam nec nunc eu tellus consequat faucibus. Phasellus sit amet magna eget orci efficitur luctus. Ut efficitur aliquet velit vitae placerat. Sed sit amet efficitur risus. Mauris eleifend bibendum velit, et dictum turpis faucibus vel. Vivamus vel mauris et risus auctor congue. Suspendisse eget tincidunt est. Donec auctor ipsum et orci placerat, vel efficitur justo fringilla. Proin vel dapibus leo. Integer sagittis, lectus nec vulputate scelerisque, mauris lacus laoreet elit, id eleifend lacus mauris ut eros. Sed dapibus turpis odio, a vehicula justo commodo nec. Phasellus hendrerit elit vitae tellus suscipit ultrices.</p>
+    <p>Another paragraph of content. Duis venenatis semper magna, sit amet posuere justo consectetur vel. Curabitur auctor, eros non faucibus ultricies, nunc metus mattis felis, sit amet fringilla lacus metus in turpis. Proin in mi eu neque tempor aliquet. Fusce nec massa sit amet ex consequat consectetur eu ac neque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Cras vitae nisi in leo posuere commodo. Nulla facilisi. Nulla facilisi.</p>
+</div>
+<div class="bg">
+<img src="../static/bg.jpg">
+</div>
+
+<!-- Clear floats -->
+<div class="clearfix"></div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <!-- Footer content goes here -->
+        <p>This is the footer content.</p>
+    </div>
+</footer>
 {% endblock %}
