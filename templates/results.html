@@ -1,13 +1,17 @@
-<!-- templates/results.html (do not remove this comment) -->
+<!-- templates/results.html (do not change/remove this comment) -->
 {% extends "base.html" %} {% block title %}Results{% endblock %} {% block content %}
-<h1>Results Page</h1>
-<p>Welcome to the Results page!</p>
+<div class="text-center">
+	<h1>Results Page</h1>
+</div>
 <div class="container">
 	<div class="row">
 		{% for image_url in image_urls %}
 		<div class="col-md-3 mb-4">
-			<div class="card">
-				<img src="{{ url_for('serve_cropped_image', filename=image_url) }}" class="card-img-top" alt="Cropped Image" />
+			<div class="card border-0">
+				<img src="{{ url_for('serve_cropped_image', filename=image_url) }}" class="card-img-top" alt="Cropped Image" style="border-radius: 1rem" />
+				<div class="card-body text-center">
+					<p class="card-text">{{ get_formatted_date(image_url) }}</p>
+				</div>
 			</div>
 		</div>
 		{% endfor %}
