@@ -1,9 +1,20 @@
 # app.py (do not change/remove this comment)
-from flask import Flask, render_template, request, jsonify, send_from_directory
 import os
-from werkzeug.utils import secure_filename
-import crop
 from datetime import datetime
+
+from flask import (
+    Flask,
+    jsonify,
+    redirect,
+    render_template,
+    request,
+    send_from_directory,
+    url_for,
+)
+from werkzeug.utils import secure_filename
+
+import crop
+from tpot_regression_model import predict_from_image
 
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = "temp"
@@ -57,6 +68,17 @@ def serve_cropped_image(filename):
     return send_from_directory(app.config["CROPPED_FOLDER"], filename)
 
 
+@app.route("/predict/<filename>")
+def predict(filename):
+    input_image = os.path.join(app.config["CROPPED_FOLDER"], filename)
+    prediction = predict_from_image(input_image)
+    return render_template(
+        "predict.html",
+        image_url=url_for("serve_cropped_image", filename=filename),
+        prediction=prediction,
+    )
+
+
 def get_formatted_date(image_url):
     parts = image_url.split("_")
     date_string = parts[0] + " " + parts[1]
@@ -65,9 +87,6 @@ def get_formatted_date(image_url):
     formatted_date = date_object.strftime("%B %d, %Y, %I:%M%p")
     return formatted_date
 
-@app.route("/predict")
-def predict():
-    return render_template("predict.html")
 
 if __name__ == "__main__":
     if not os.path.exists(app.config["UPLOAD_FOLDER"]):

@@ -7,7 +7,7 @@
 	<div class="row">
 		{% for image_url in image_urls %}
 		<div class="col-md-3 mb-4">
-			<div class="card border-0">
+			<div class="card border-0" style="cursor: pointer" onclick="handleImageClick('{{ image_url }}')">
 				<img src="{{ url_for('serve_cropped_image', filename=image_url) }}" class="card-img-top" alt="Cropped Image" style="border-radius: 1rem" />
 				<div class="card-body text-center">
 					<p class="card-text">{{ get_formatted_date(image_url) }}</p>
@@ -17,4 +17,9 @@
 		{% endfor %}
 	</div>
 </div>
+<script>
+	function handleImageClick(imageUrl) {
+		window.location.href = "/predict/" + imageUrl;
+	}
+</script>
 {% endblock %}

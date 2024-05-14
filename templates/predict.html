@@ -1,4 +1,18 @@
 <!-- templates/predict.html (do not remove this comment) -->
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
-<h1>Prediction Page</h1> <!-- temporary -->
+{% extends "base.html" %} {% block title %}Prediction{% endblock %} {% block content %}
+<div class="text-center">
+	<h1>Prediction Page</h1>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<img src="{{ image_url }}" class="img-fluid" alt="Predicted Image" style="border-radius: 1rem; margin-bottom: 1rem" />
+				<div class="card">
+					<div class="card-body">
+						<p class="card-text">Prediction: {{ prediction }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock %}
