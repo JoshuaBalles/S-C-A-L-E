@@ -65,6 +65,9 @@ def get_formatted_date(image_url):
     formatted_date = date_object.strftime("%B %d, %Y, %I:%M%p")
     return formatted_date
 
+@app.route("/predict")
+def predict():
+    return render_template("predict.html")
 
 if __name__ == "__main__":
     if not os.path.exists(app.config["UPLOAD_FOLDER"]):
